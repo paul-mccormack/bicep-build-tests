@@ -19,7 +19,7 @@ jobs:
 
     - name: Lint Bicep
       run: |
-        bicep lint ./main.bicep --diagnostic-format sarif > bicep.sarif
+        bicep lint ./main.bicep --diagnostics-format sarif > bicep.sarif
       
     - name: Upload Sarif
       if: (success() || failure())
