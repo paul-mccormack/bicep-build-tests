@@ -11,9 +11,7 @@ param location string = resourceGroup().location
 param storageAccountPrefix string = 'pmcmodops'
 
 @description('Creates a globally unique name for the storage account from storageAccountPrefix and generated unique characters.')
-@minLength(3)
-@maxLength(24)
-param stgName string = toLower('${storageAccountPrefix}${uniqueString(resourceGroup().id)}')
+var stgName = toLower('${storageAccountPrefix}${uniqueString(resourceGroup().id)}')
 
 @allowed([
   'Premium_LRS'
