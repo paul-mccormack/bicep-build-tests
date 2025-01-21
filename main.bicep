@@ -1,6 +1,6 @@
 
 //uncomment the parameter below to trigger a warning
-param notused string = 'unused'
+//param notused string = 'unused'
 
 @description('Azure region for deployment')
 param location string = resourceGroup().location
@@ -74,4 +74,4 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
 }
 
 //uncomment the output below to trigger an error causing the deployment to fail
-//output leakedsecret string = stg.listKeys().keys[0].value
+output leakedsecret string = stg.listKeys().keys[0].value
