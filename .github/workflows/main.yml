@@ -9,8 +9,15 @@ permissions:
   actions: read # Required if repo is private
   contents: read # Required if repo is private
   security-events: write # Required for code scanning
-      
-jobs: 
+
+env:
+  rgName: rg-uks-sandbox-pmc-github-testing
+  location: uksouth
+  costTag: "Cost Centre=Training"
+  serviceTag: "Service=Training"
+  createdTag: "Created By=Paul McCormack"
+
+jobs:
   test:
     runs-on: ubuntu-latest
     steps:
@@ -44,11 +51,11 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az group create --name rg-uks-sandbox-pmc-github-testing --location uksouth --tags "Cost Centre=Training" "Service=Training" "Created By=Paul McCormack"
+          az group create --name $rgname --location $location --tags $costTag $costTag $createdTag
 
     - name: Deploy Resources
       uses: azure/powershell@v2
       with:
         azPSVersion: latest
         inlineScript: |
-          New-AzResourceGroupDeployment -Name wafPolicyUpdateRemoveUKLock -ResourceGroupName rg-uks-sandbox-pmc-github-testing -TemplateFile ./main.bicep
+          New-AzResourceGroupDeployment -Name deployStorageAccount -ResourceGroupName $rgName -TemplateFile ./main.bicep
