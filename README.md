@@ -42,4 +42,16 @@ id-token is required as I am logging into Azure using OpenID Connect.  The read 
 
 After the code checkout step I am using the Setup Bicep action by [Anthony C Martin](https://github.com/marketplace/actions/setup-bicep) to install the Bicep CLI onto the Github hosted runner. Then we can run the bicep lint command to perform the analysis and output a SARIF file (Static Analysis Results Interchange Format), this file is then uploaded to the github repository using the GitHub provided [codeql action](https://github.com/github/codeql-action).
 
+The rest of the deployment is logging into Azure, creating a resource group and finally deploying the resources.  In this example I am deploying a storage account.
+
+## Warning example
+
+I've included a commented paramater at the top of the Bicep template which is not used.
+
+```
+//uncomment the parameter below to trigger a warning
+//param notused string = 'unused'
+```
+Uncommenting this parameter would cause a warning to be triggered.  The deployment would still succeed but with a warning in the code scanning section of the repo.
+
 
