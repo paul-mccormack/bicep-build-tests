@@ -34,6 +34,8 @@ permissions:
   security-events: write # Required for code scanning
 ```
 
-id-token is required as I am logging into Azure using OpenID Connect.  The read permissions for actions and conents are only needed if your repository is private.  The security-events permission set to write is the important one for this example.
+id-token is required as I am logging into Azure using OpenID Connect.  The read permissions for actions and contents are only needed if your repository is private.  The security-events permission set to write is the important one for this example.
+
+After the code checkout step I am using the Setup Bicep action by [Anthony C Martin](https://github.com/marketplace/actions/setup-bicep) to install the Bicep CLI onto the Github hosted runner. Then we can run the bicep lint command to perform the analysis and output a SARIF file (Static Analysis Results Interchange Format), this file is then uploaded to the github repository using the GitHub provided [codeql action](https://github.com/github/codeql-action).
 
 
