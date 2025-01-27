@@ -2,7 +2,7 @@
 
 Azure Bicep supports code linting.  Linting is a process to check code for programatic and stylistic errors.  VS Code with the Bicep extension installed does this automatically as you write to check against the recommended best practices.  More information and details is available in the [Bicep Documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/linter).  The screenshot below shows the automatic linter in VS Code highlighting a warning for an unused parameter:
 
-![VS Code linter warning]()
+![VS Code linter warning](https://github.com/paul-mccormack/bicep-build-tests/blob/main/images/linterWarning.jpg)
 
 This automated linting works fine if you do not need to change from the recommended rules.  If you do need to change the level or disable a rule you can create a file named ```bicepconfig.json``` in the same directory as your bicep files.  You can see an example in this repository.
 
