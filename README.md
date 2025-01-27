@@ -56,5 +56,15 @@ Uncommenting this parameter would cause a warning to be triggered.  The deployme
 
 ![code scanning warning]()
 
+At the bottom of the Bicep template there is a commented output statement which is more serious and I want to cause this deployment to fail the test with an error.
+
+```
+//uncomment the output below to trigger an error causing the deployment to fail
+//output leakedsecret string = stg.listKeys().keys[0].value
+```
+Uncommenting this output will output the storage account key into the deployment logs if allowed to complete.  The screenshot below shows what that looks like in the repo code scanning section:
+
+![code scanning error]()
+
 
 
