@@ -10,7 +10,7 @@ And an error would appear like the screenshot below:
 
 This automated linting works fine if you do not need to change from the recommended rules.  If you do need to change the level or disable a rule you can create a file named ```bicepconfig.json``` in the same directory as your bicep files.  You can see an example in this repository.
 
-The available levels for a rule are: off, info, warning and error.  All but error will allow you to deploy the bicep code.  Most of the rules at default configuration are set to warning.  These cover best practise recommenadations mostly and will deploy without issues but there are a few I would prefer to be set to error and halt the deployment.  These are the rules that specifically deal with secrets.
+The available levels for a rule are: off, info, warning and error.  All but error will allow you to deploy the bicep code.  The default setting for all the rules is warning.  These cover best practise recommendations mostly and will deploy without issues, hoever there are a few I would prefer to be set to error and halt the deployment.  These are the rules that specifically deal with secrets.
 
 For example, you can ensure a parameter that contains sensitive data is kept out of deployment logs by using the ```@secure()``` decorator.  There is a rule to enforce this called ```secure-secrets-in-params```.  The code below shows that rule with the enforcement raised to error:
 
@@ -46,7 +46,7 @@ The rest of the deployment is logging into Azure, creating a resource group and 
 
 ## Warning example
 
-I've included a commented paramater at the top of the Bicep template which is not used.
+I've included a commented parameter at the top of the Bicep template which is not used.
 
 ```
 //uncomment the parameter below to trigger a warning
@@ -54,7 +54,7 @@ I've included a commented paramater at the top of the Bicep template which is no
 ```
 Uncommenting this parameter would cause a warning to be triggered.  The deployment would still succeed but with a warning in the code scanning section of the repo. as shown in the follwing screenshot:
 
-![code scanning warning]()
+![code scanning warning](https://github.com/paul-mccormack/bicep-build-tests/blob/main/images/codeScanningWarning.jpg)
 
 
 ## Error example
@@ -65,13 +65,13 @@ At the bottom of the Bicep template there is a commented output statement which 
 //uncomment the output below to trigger an error causing the deployment to fail
 //output leakedsecret string = stg.listKeys().keys[0].value
 ```
-Uncommenting this output will output the storage account key into the deployment logs if allowed to complete.  The screenshot below shows what that looks like in the repo code scanning section:
+Uncommenting this output will write the storage account key into the deployment logs if allowed to complete.  The screenshot below shows what that looks like in the repo code scanning section:
 
-![code scanning error]()
+![code scanning error](https://github.com/paul-mccormack/bicep-build-tests/blob/main/images/codeScanningFail.jpg)
 
 In the actions job we can see it did fail at the linting step so our storage account key wasn't exposed.
 
-![job failure]()
+![job failure](https://github.com/paul-mccormack/bicep-build-tests/blob/main/images/makeItFail.jpg)
 
 ## Override a linter rule
 
