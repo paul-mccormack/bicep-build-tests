@@ -51,7 +51,7 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az group create --name ${{env.rgName}} --location ${{env.location}} --tags ${{env.costTag}} ${{env.serviceTag}} ${{env.createdTag}}
+          az group create --name ${{env.rgName}} --location ${{env.location}} --tags "${{env.costTag}}" "${{env.serviceTag}}" "${{env.createdTag}}"
 
     - name: Deploy Resources
       uses: azure/powershell@v2
