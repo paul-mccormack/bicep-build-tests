@@ -56,6 +56,9 @@ Uncommenting this parameter would cause a warning to be triggered.  The deployme
 
 ![code scanning warning]()
 
+
+## Error example
+
 At the bottom of the Bicep template there is a commented output statement which is more serious and I want to cause this deployment to fail the test with an error.
 
 ```
@@ -66,5 +69,17 @@ Uncommenting this output will output the storage account key into the deployment
 
 ![code scanning error]()
 
+In the actions job we can see it did fail at the linting step so our storage account key wasn't exposed.
+
+![job failure]()
+
+## Override a linter rule
+
+Bicep provides a method for overriding a rule when you have no other choice. I would use this with caution.  Add #disable-next-line followed by the name of the linter rule you want to override on the line above the warning.  
+
+```
+#disable-next-line no-unused-params
+param notused string = 'unused'
+```
 
 
