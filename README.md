@@ -52,9 +52,9 @@ I've included a commented paramater at the top of the Bicep template which is no
 //uncomment the parameter below to trigger a warning
 //param notused string = 'unused'
 ```
-Uncommenting this parameter would cause a warning to be triggered.  The deployment would still succeed but with a warning in the code scanning section of the repo.
+Uncommenting this parameter would cause a warning to be triggered.  The deployment would still succeed but with a warning in the code scanning section of the repo. as shown in the follwing screenshot:
 
+![code scanning warning]()
 
-test
 
 

@@ -1,6 +1,6 @@
 
 //uncomment the parameter below to trigger a warning
-param notused string = 'unused'
+//param notused string = 'unused'
 
 @description('Azure region for deployment')
 param location string = resourceGroup().location
