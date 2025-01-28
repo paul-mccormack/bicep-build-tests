@@ -10,7 +10,7 @@ And an error would appear like the screenshot below:
 
 This automated linting works fine if you do not need to change from the recommended rules.  If you do need to change the level or disable a rule you can create a file named ```bicepconfig.json``` in the same directory as your bicep files.  You can see an example in this repository.
 
-The available levels for a rule are: off, info, warning and error.  All but error will allow you to deploy the bicep code.  The default setting for all the rules is warning.  These cover best practise recommendations mostly and will deploy without issues, hoever there are a few I would prefer to be set to error and halt the deployment.  These are the rules that specifically deal with secrets.
+The available levels for a rule are: off, info, warning and error.  All but error will allow you to deploy the bicep code.  The default setting for all the rules is warning.  These cover best practise recommendations mostly and will deploy without issues, however there are a few I would prefer to be set to error and halt the deployment.  These are the rules that specifically deal with secrets.
 
 For example, you can ensure a parameter that contains sensitive data is kept out of deployment logs by using the ```@secure()``` decorator.  There is a rule to enforce this called ```secure-secrets-in-params```.  The code below shows that rule with the enforcement raised to error:
 
