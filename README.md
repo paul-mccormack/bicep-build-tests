@@ -28,7 +28,7 @@ For example, you can ensure a parameter that contains sensitive data is kept out
   }
 }
 ```
-To use this in a CI/CD workflow deployment and publish any errors or warnings you need to add the linting stage as a job or step in the deployment.  The ```main.yml``` GitGub Actions workflow file in this repo is configured to do this.  The results of the code tests will appear in the repository under Security - Code Scanning.  You need to give GitHub Actions some permissions to enable it to upload the results into the repo.  This is done in the permissions section of the workflow file:
+To use this in a CI/CD workflow deployment and publish any errors or warnings you need to add the linting stage as a job or step in the deployment.  The ```main.yml``` GitHub Actions workflow file in this repo is configured to do this.  The results of the code tests will appear in the repository under Security - Code Scanning.  You need to give GitHub Actions some permissions to enable it to upload the results into the repo.  This is done in the permissions section of the workflow file:
 
 ```yml
 permissions:
