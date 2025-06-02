@@ -114,7 +114,6 @@ jobs:
         type: deployment
         name: whatIf
         operation: whatIf
-        location: ${{env.location}}
         scope: resourceGroup
         subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
         resource-group-name: ${{env.rgName}}
