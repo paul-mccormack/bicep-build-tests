@@ -49,23 +49,26 @@ param containerName string = 'blobs'
 @description('Container public access.  Allowed list only.  Default is None.')
 param containerPublicAccess string = 'None'
 
-resource stg 'Microsoft.Storage/storageAccounts@2023-05-01' = {
+resource stg 'Microsoft.Storage/storageAccounts@2024-01-01' = {
   name: stgName
   location: location 
   sku: {
     name: storageSku
   }
   kind: storageKind
+  properties: {
+    minimumTlsVersion: 'TLS1_2'
+  }
 }
 
 @description('Deploy blob service')
-resource blob 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' = {
+resource blob 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
   parent: stg
   name: 'default'
 }
 
 @description('Deploy blob container')
-resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
+resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2024-01-01' = {
   parent: blob
   name: toLower(containerName)
   properties: {

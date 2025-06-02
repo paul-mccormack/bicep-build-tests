@@ -123,6 +123,7 @@ jobs:
     name: Deploy Solution
     runs-on: ubuntu-latest
     needs: what-if-bicep
+    environment: production
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
@@ -135,9 +136,14 @@ jobs:
         subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}} 
         enable-AzPSSession: true
 
-    - name: Deploy Resources
-      uses: azure/powershell@v2
+    - name: Deployment
+      uses: azure/bicep-deploy@v2
       with:
-        azPSVersion: latest
-        inlineScript: |
-          New-AzResourceGroupDeployment -Name deployStorageAccount -ResourceGroupName ${{env.rgName}} -TemplateFile ./main.bicep
+        type: deployment
+        name: deploy
+        operation: create
+        scope: resourceGroup
+        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+        resource-group-name: ${{env.rgName}}
+        template-file: ./main.bicep
+
