@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - refactor-actions-config
   workflow_dispatch:
 
 permissions:
@@ -18,8 +19,10 @@ env:
   serviceTag: "Service=Training"
   createdTag: "Created By=Paul McCormack"
 
+
+
 jobs:
-  check-and-deploy:
+  lint-bicep:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
@@ -28,7 +31,7 @@ jobs:
     - name: Setup Bicep
       uses: anthony-c-martin/setup-bicep@v0.3
 
-    - name: Lint Bicep
+    - name: Lint Bicep Code
       run: |
         bicep lint ./main.bicep --diagnostics-format sarif > bicep.sarif
       
@@ -38,6 +41,14 @@ jobs:
       with:
         category: bicep
         sarif_file: bicep.sarif
+  
+  validate-bicep:
+    name: Validate Bicep Code
+    needs: lint-bicep
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
     
     - name: Azure Login
       uses: azure/login@v2
@@ -46,7 +57,63 @@ jobs:
         tenant-id: ${{secrets.AZURE_TENANT_ID}}
         subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}} 
         enable-AzPSSession: true
+
+    - name: Run Validation Check
+      uses: azure/bicep-deploy@v2
+      with:
+        type: deployment
+        name: validate
+        operation: validate
+        location: ${{env.location}}
+        scope: resourceGroup
+        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+        resource-group-name: ${{env.rgName}}
+        template-file: ./main.bicep
+
+  what-if-bicep:
+    name: What If Bicep Code
+    needs: validate-bicep
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
     
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        client-id: ${{secrets.AZURE_CLIENT_ID}}
+        tenant-id: ${{secrets.AZURE_TENANT_ID}}
+        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}} 
+        enable-AzPSSession: true
+
+    - name: Run What If Check
+      uses: azure/bicep-deploy@v2
+      with:
+        type: deployment
+        name: whatIf
+        operation: WhatIf
+        location: ${{env.location}}
+        scope: resourceGroup
+        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+        resource-group-name: ${{env.rgName}}
+        template-file: ./main.bicep
+    
+  deploy-bicep:
+    name: Deploy Solution
+    runs-on: ubuntu-latest
+    needs: what-if-bicep
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+    
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        client-id: ${{secrets.AZURE_CLIENT_ID}}
+        tenant-id: ${{secrets.AZURE_TENANT_ID}}
+        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}} 
+        enable-AzPSSession: true
+
     - name: Create Resource Group
       uses: azure/cli@v2
       with:
