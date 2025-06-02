@@ -113,7 +113,7 @@ jobs:
       with:
         type: deployment
         name: whatIf
-        operation: WhatIf
+        operation: whatIf
         location: ${{env.location}}
         scope: resourceGroup
         subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
