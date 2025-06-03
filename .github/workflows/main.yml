@@ -49,6 +49,7 @@ jobs:
           az group create --name ${{env.rgName}} --location ${{env.location}} --tags "${{env.costTag}}" "${{env.serviceTag}}" "${{env.createdTag}}"
 
   lint-bicep:
+    name: Lint Bicep
     runs-on: ubuntu-latest
     needs: create-resource-group
     steps:
