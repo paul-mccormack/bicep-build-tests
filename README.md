@@ -140,7 +140,7 @@ When you use federated credentials to allow the pipeline access to Azure, the su
 repo:paul-mccormack/bicep-build-tests:ref:refs/heads/main
 ```
 
-So only a push or merge into the main branch would be successful at logging into Azure.  When you use an envrionment the branch configuration is replaced with the environment configuration, shown below:
+Only a push or merge into the main branch would be successful at logging into Azure.  When you use an envrionment the branch configuration is replaced with the environment configuration, shown below:
 
 ```
 repo:paul-mccormack/bicep-build-tests:environment:production
