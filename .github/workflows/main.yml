@@ -7,8 +7,6 @@ on:
   push:
     branches:
       - main
-      - refactor-actions-config
-  workflow_dispatch:
 
 permissions:
   id-token: write # Require write permission to Fetch an OIDC token.
