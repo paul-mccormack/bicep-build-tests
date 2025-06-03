@@ -119,7 +119,7 @@ The approval for the final deployment is accomplished by configuring an Environm
 
 ![environment](https://github.com/paul-mccormack/bicep-build-tests/blob/main/images/environment.jpg)
 
-Then you can use the ```environment:``` statement in the deployment job to trigger the protection rule.
+Then you can use the ```environment:``` statement in the deployment job to trigger the protection rule and pause the deployment until the reviewer has approved the job.
 
 ```yml
 deploy-job:
@@ -130,5 +130,26 @@ deploy-job:
     steps:
 ```
 
+### Note on using enviroments with OIDC
+
+You need to provide your repo with your Azure tenant ID, Subscription ID and App Registration ID.  These are secured in the Actions Repository Secrets section to allow the [azure/login@v2](https://github.com/marketplace/actions/azure-login) action to gain access.
+
+When you use federated credentials to allow the pipeline access to Azure, the subject claim GitHub sends in the token must match exactly the subject identifier in the App Registration Federated Credentials.  The subject claim GitHub sends includes the branch, normally main and would look like the example below:
+
+```
+repo:paul-mccormack/bicep-build-tests:ref:refs/heads/main
+```
+
+So only a push or merge into the main branch would be successful at logging into Azure.  When you use an envrionment the branch configuration is replaced with the environment configuration, shown below:
+
+```
+repo:paul-mccormack/bicep-build-tests:environment:production
+```
+
+To handle this I created two Federated Credentials on the App Registration.
+
+![Federated Credentials](insert link)
+
+There are a lot of options on how you could configure this depending on your scenario.  You could configure credentails for the main branch and another credential for a test or dev branch.  If you had production and dev environments configured in GitHub you could create an App Registration for each environment and put the required secrets into the environment secrets instead of the repository secrets.
 
 
