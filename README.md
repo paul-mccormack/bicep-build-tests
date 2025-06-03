@@ -117,7 +117,7 @@ jobs:
 
 The approval for the final deployment is accomplished by configuring an Environment is the repository with a protection rule requiring a reviewer before the environment can be used.  In a true production environment you would also enable the Prevent self-review feature.
 
-![environment](insert link)
+![environment](https://github.com/paul-mccormack/bicep-build-tests/blob/main/images/environment.jpg)
 
 Then you can use the ```environment:``` statement in the deployment job to trigger the protection rule.
 
