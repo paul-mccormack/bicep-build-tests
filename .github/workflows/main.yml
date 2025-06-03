@@ -1,3 +1,7 @@
+#
+# GitHub Actions pipeline configuration file
+#
+
 name: Check and Deploy Bicep Template
 on:
   push:
