@@ -84,3 +84,51 @@ Bicep provides a method for overriding a rule when you have no other choice. I w
 param notused string = 'unused'
 ```
 
+## Pipeline Configuration
+
+The pipeline is configured to perform the deployment using multiple jobs with an approval gate in place before the deployment is carried out.  The steps are:
+
+* Create the Resource Group - We need to create this first for the validation stage to succeed.
+* Run a linting check on the Bicep code.
+* Run a Validation check on the Bicep code.
+* Run a What-if check on the Bicep code.
+* Pause the deployment and wait for approval.
+* Upon approval run the deployment.
+
+The config file can be found here: [main.yml](https://github.com/paul-mccormack/bicep-build-tests/blob/main/.github/workflows/main.yml)
+
+Each job is dependant on the previous stage by using the ```needs:``` statement.  The following code block is an example.  Job 2 will not commence unless Job 1 is successfully completed.
+
+```yml
+jobs:
+  job1:
+    name: Job 1
+    runs-on: ubuntu-latest
+    steps:
+    - name: step1
+    
+  job2:
+    name: Job 2
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+    - name: step1
+```
+
+The approval for the final deployment is accomplished by configuring an Environment is the repository with a protection rule requiring a reviewer before the environment can be used.  In a true production environment you would also enable the Prevent self-review feature.
+
+![environment](insert link)
+
+Then you can use the ```environment:``` statement in the deployment job to trigger the protection rule.
+
+```yml
+deploy-job:
+  name: Deploy Resources
+  runs-on: ubuntu-latest
+  needs: previous-job
+    environment: production
+    steps:
+```
+
+
+
