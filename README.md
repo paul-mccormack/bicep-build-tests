@@ -130,7 +130,7 @@ deploy-job:
     steps:
 ```
 
-### Note on using enviroments with OIDC
+### Note on using environments with OIDC
 
 You need to provide your repo with your Azure tenant ID, Subscription ID and App Registration ID.  These are secured in the Actions Repository Secrets section to allow the [azure/login@v2](https://github.com/marketplace/actions/azure-login) action to gain access.
 
