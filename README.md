@@ -148,7 +148,7 @@ repo:paul-mccormack/bicep-build-tests:environment:production
 
 To handle this I created two Federated Credentials on the App Registration.
 
-![Federated Credentials](insert link)
+![Federated Credentials](https://github.com/paul-mccormack/bicep-build-tests/blob/main/images/fedCreds.jpg)
 
 There are a lot of options on how you could configure this depending on your scenario.  You could configure credentails for the main branch and another credential for a test or dev branch.  If you had production and dev environments configured in GitHub you could create an App Registration for each environment and put the required secrets into the environment secrets instead of the repository secrets.
 
